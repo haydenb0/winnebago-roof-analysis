@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roof Replacement Analysis — 2017 Winnebago Forza 36G</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    color: #1a1a1a;
+    background: #f5f5f0;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  }
+
+  /* Header */
+  .hero {
+    background: #1c3a5e;
+    color: #fff;
+    padding: 48px 48px 40px;
+  }
+  .hero-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7fb3e0;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 14px;
+    color: #a8c8e8;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .hero-meta span strong { color: #fff; }
+
+  /* Nav pills */
+  .nav {
+    background: #f0f4f8;
+    padding: 14px 48px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #dde3ea;
+  }
+  .nav a {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1c3a5e;
+    text-decoration: none;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid #c8d5e3;
+    white-space: nowrap;
+  }
+  .nav a:hover { background: #1c3a5e; color: #fff; border-color: #1c3a5e; }
+
+  /* Content */
+  .content { padding: 0 48px 64px; }
+
+  section { padding-top: 48px; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7fb3e0;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1c3a5e;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e8edf2;
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1c3a5e;
+    margin: 24px 0 10px;
+  }
+
+  p { margin-bottom: 14px; color: #333; }
+
+  /* Alert box */
+  .alert {
+    background: #fff8e6;
+    border-left: 4px solid #e6a817;
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+  .alert strong { color: #b07d10; }
+
+  /* Option cards */
+  .option-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 24px 0;
+  }
+  @media (max-width: 640px) { .option-grid { grid-template-columns: 1fr; } }
+
+  .option-card {
+    border: 2px solid #dde3ea;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .option-card.option-a .card-header { background: #2c5f8a; }
+  .option-card.option-b .card-header { background: #2a7a4f; }
+  .card-header {
+    color: #fff;
+    padding: 16px 20px;
+  }
+  .card-header .option-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+  .card-header h3 { color: #fff; margin: 0; font-size: 16px; }
+  .card-header .card-sub { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  .card-body { padding: 16px 20px; }
+  .card-stat { margin-bottom: 12px; }
+  .card-stat .stat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; }
+  .card-stat .stat-value { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+  .card-stat .stat-note { font-size: 12px; color: #777; }
+
+  /* Cost tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #f0f4f8;
+    color: #1c3a5e;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid #dde3ea;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbfc; }
+  .td-right { text-align: right; font-variant-numeric: tabular-nums; }
+  .total-row td {
+    font-weight: 700;
+    background: #f0f4f8;
+    border-top: 2px solid #dde3ea;
+    font-size: 15px;
+  }
+  .subtotal-row td {
+    font-weight: 600;
+    background: #f7f9fb;
+    color: #555;
+  }
+
+  /* Comparison table */
+  .compare-table th:first-child { width: 30%; }
+  .compare-table .opt-a { color: #2c5f8a; font-weight: 600; }
+  .compare-table .opt-b { color: #2a7a4f; font-weight: 600; }
+  .win { background: #f0faf4 !important; }
+
+  /* Pro/Con lists */
+  .pro-con {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  @media (max-width: 560px) { .pro-con { grid-template-columns: 1fr; } }
+  .pros, .cons { border-radius: 8px; padding: 14px 16px; }
+  .pros { background: #f0faf4; border: 1px solid #b8e0c8; }
+  .cons { background: #fdf3f3; border: 1px solid #e8c0c0; }
+  .pros h4 { color: #2a7a4f; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .cons h4 { color: #b03030; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .pros li, .cons li {
+    font-size: 14px;
+    list-style: none;
+    padding: 3px 0 3px 20px;
+    position: relative;
+    color: #333;
+  }
+  .pros li::before { content: "✓"; position: absolute; left: 0; color: #2a7a4f; font-weight: 700; }
+  .cons li::before { content: "✗"; position: absolute; left: 0; color: #b03030; font-weight: 700; }
+
+  /* Tech specs */
+  .spec-block {
+    background: #f7f9fb;
+    border: 1px solid #dde3ea;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+  .spec-block h4 { font-size: 14px; font-weight: 700; color: #1c3a5e; margin-bottom: 12px; }
+  .spec-row { display: flex; gap: 12px; padding: 7px 0; border-bottom: 1px solid #e8edf2; font-size: 14px; }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-key { font-weight: 600; color: #555; min-width: 180px; flex-shrink: 0; }
+  .spec-val { color: #222; }
+
+  /* Questions section */
+  .questions ol { padding-left: 20px; }
+  .questions li { margin-bottom: 12px; font-size: 15px; color: #333; }
+  .questions li strong { color: #1c3a5e; }
+
+  /* Timeline */
+  .timeline { border-left: 3px solid #dde3ea; padding-left: 24px; margin: 16px 0; }
+  .timeline-item { position: relative; margin-bottom: 18px; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2c5f8a;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #2c5f8a;
+  }
+  .timeline-date { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #7fb3e0; }
+  .timeline-text { font-size: 14px; color: #333; margin-top: 2px; }
+
+  /* Footer */
+  .footer {
+    background: #1c3a5e;
+    color: #7fb3e0;
+    padding: 24px 48px;
+    font-size: 13px;
+  }
+  .footer strong { color: #fff; }
+
+  /* Utility */
+  .text-muted { color: #777; font-size: 14px; }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .badge-blue { background: #dceeff; color: #1c5a8a; }
+  .badge-green { background: #d4f0e0; color: #1a6b3c; }
+  .badge-yellow { background: #fff3cc; color: #8a6000; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">RV Roof Replacement — Decision Analysis</div>
+  <h1>2017 Winnebago Forza 36G<br>Roof Replacement: Two Options</h1>
+  <p style="color:#a8c8e8; font-size:15px; margin-top:12px;">A detailed comparison of the Winnebago factory goodwill offer vs. a local specialist replacement using the ARV RoofTech membrane system. Prepared to gather feedback from the RV community.</p>
+  <div class="hero-meta">
+    <span><strong>Vehicle:</strong> 2017 Winnebago Forza 36G, Class A diesel pusher</span>
+    <span><strong>VIN:</strong> 10W97558</span>
+    <span><strong>Case:</strong> Winnebago #00385310</span>
+    <span><strong>Location:</strong> Simi Valley, CA</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <a href="#background">Background</a>
+  <a href="#condition">Current Condition</a>
+  <a href="#option-a">Option A: Winnebago</a>
+  <a href="#option-b">Option B: Accent RV</a>
+  <a href="#comparison">Comparison</a>
+  <a href="#questions">Questions for You</a>
+  <a href="#resources">Resources &amp; Links</a>
+</div>
+
+<div class="content">
+
+<!-- SUMMARY CARDS -->
+<section>
+  <div class="section-label">Quick Summary</div>
+  <h2>The Two Options at a Glance</h2>
+  <div class="option-grid">
+    <div class="option-card option-a">
+      <div class="card-header">
+        <div class="option-tag">Option A</div>
+        <h3>Winnebago Factory Service</h3>
+        <div class="card-sub">Forest City, Iowa — OEM Replacement</div>
+      </div>
+      <div class="card-body">
+        <div class="card-stat">
+          <div class="stat-label">Estimated Total Cost</div>
+          <div class="stat-value">~$19,700–$21,700</div>
+          <div class="stat-note">Bob pays $16,720 labor + ~$3–5K travel</div>
+        </div>
+        <div class="card-stat">
+          <div class="stat-label">Roof System</div>
+          <div class="stat-value" style="font-size:15px">OEM Fiberglass / Filon</div>
+          <div class="stat-note">Same design as original</div>
+        </div>
+        <div class="card-stat">
+          <div class="stat-label">Warranty</div>
+          <div class="stat-value" style="font-size:15px">Unknown — possibly none</div>
+          <div class="stat-note">Goodwill repairs may carry no warranty</div>
+        </div>
+        <div class="card-stat">
+          <div class="stat-label">Travel Required</div>
+          <div class="stat-value" style="font-size:15px">~1,900 miles each way</div>
+          <div class="stat-note">Simi Valley, CA → Forest City, IA</div>
+        </div>
+      </div>
+    </div>
+    <div class="option-card option-b">
+      <div class="card-header">
+        <div class="option-tag">Option B</div>
+        <h3>Accent RV Roofing</h3>
+        <div class="card-sub">Corona, CA — ARV RoofTech Membrane System</div>
+      </div>
+      <div class="card-body">
+        <div class="card-stat">
+          <div class="stat-label">Estimated Total Cost</div>
+          <div class="stat-value">$12,901.88</div>
+          <div class="stat-note">All-in: parts, labor, tax. No travel.</div>
+        </div>
+        <div class="card-stat">
+          <div class="stat-label">Roof System</div>
+          <div class="stat-value" style="font-size:15px">ARV RoofTech™ Membrane</div>
+          <div class="stat-note">Multi-layer elastomeric, polyurethane topcoat</div>
+        </div>
+        <div class="card-stat">
+          <div class="stat-label">Warranty</div>
+          <div class="stat-value" style="font-size:15px">18-Year No-Leak</div>
+          <div class="stat-note">Fully transferable, labor &amp; materials</div>
+        </div>
+        <div class="card-stat">
+          <div class="stat-label">Travel Required</div>
+          <div class="stat-value" style="font-size:15px">Minimal</div>
+          <div class="stat-note">~50 miles / 2–3 hour drive from Simi Valley</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BACKGROUND -->
+<section id="background">
+  <div class="section-label">Section 1</div>
+  <h2>Background &amp; Dispute History</h2>
+  <p>This coach has a fiberglass roof that began showing hairline cracks along the radius edge in 2021. I contacted Winnebago at that time and have been engaged with their customer care team ever since. The key milestones:</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">October 2021</div>
+      <div class="timeline-text">First contacted Winnebago about hairline cracks along the roof radius. Barber RV (Ventura, CA) evaluated the roof and submitted findings directly to Winnebago's tech team.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Early 2022</div>
+      <div class="timeline-text">Winnebago facilitated a spray-on bed liner coating repair at Barber RV to address the cracking. The repair did not address the root cause of delamination.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">January 2022</div>
+      <div class="timeline-text">Bubbles forming; fiberglass skin beginning to visibly separate from the underlayment. Reported to Winnebago.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">December 2023</div>
+      <div class="timeline-text">Documented progressive delamination using a spirit level on the roof — measurable unevenness confirmed across the roof surface. Delamination and ridge formation continuing to worsen.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">March 18, 2025</div>
+      <div class="timeline-text">Winnebago offered in writing: <em>"we are willing to offer a goodwill replacement of the roof — with the stipulation being that the issue is not determined to be due to lack of sealant maintenance."</em> One condition. No mention of parts-only or labor caps.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">March 20, 2025</div>
+      <div class="timeline-text">When I called to schedule, Winnebago walked back the offer to "parts only." This was a unilateral change after I had accepted the terms.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">April 17, 2025</div>
+      <div class="timeline-text">After requesting full labor coverage, Winnebago countered: factory estimates 104 hours total. They will cap my labor responsibility at 80 hours at $209/hr — meaning I pay $16,720 in labor; they contribute 24 hours ($5,016). Escalation to management held at this offer.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Offer expires: August 31, 2026</div>
+      <div class="timeline-text">The Winnebago offer remains open at the parts + 80-hour labor cap terms through August 31, 2026.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">June 2026</div>
+      <div class="timeline-text">Active moisture intrusion discovered at two ceiling light fixtures near the front AC unit. Roof inspection found stress fractures in the filon directly above the moisture points. No sealant failures found. Obtained independent estimate from Accent RV Roofing (Corona, CA).</div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRENT CONDITION -->
+<section id="condition">
+  <div class="section-label">Section 2</div>
+  <h2>Current Roof Condition</h2>
+
+  <p>The roof has been in progressive decline since 2021. As of June 2026:</p>
+
+  <div class="spec-block">
+    <h4>Documented Defects</h4>
+    <div class="spec-row"><span class="spec-key">Delamination extent</span><span class="spec-val">Spread beyond structural strut lines; two approximately 12×12 inch patches of advanced separation visible as shadows/depressions</span></div>
+    <div class="spec-row"><span class="spec-key">Ridge formation</span><span class="spec-val">Unsupported fiberglass skin has buckled into raised ridges across the roof surface; delamination is active and continuing to worsen</span></div>
+    <div class="spec-row"><span class="spec-key">Filon skin cracking</span><span class="spec-val">Hairline stress fractures running along delaminated ridge lines — the unsupported skin flexes under its own weight and cracks</span></div>
+    <div class="spec-row"><span class="spec-key">Moisture intrusion</span><span class="spec-val">Active moisture at two ceiling light fixtures near front AC unit; interior wood paneling saturated; water drops in fixture covers — with no rainfall for months (only coastal fog)</span></div>
+    <div class="spec-row"><span class="spec-key">Sealant condition</span><span class="spec-val">No sealant failures found on roof surface inspection. Moisture pathway is the cracking filon skin, not sealant failure.</span></div>
+    <div class="spec-row"><span class="spec-key">Temporary measures</span><span class="spec-val">Plastic sheeting applied over affected area. All cracks photographed prior to any sealant application.</span></div>
+  </div>
+
+  <div class="alert">
+    <strong>Why the sealant condition matters:</strong> Winnebago's goodwill offer has one condition — the issue must not be due to lack of sealant maintenance. My inspection found no visible sealant failures, and the apparent moisture pathway is cracking of the filon skin along delaminated ridges. However, <strong>this condition has not been formally determined</strong> — Winnebago would make that assessment at time of repair. There is still some risk that moisture found during teardown could be attributed to sealant maintenance, even if the primary cause appears to be the delamination defect. An independent professional assessment documenting sealant condition before any work is done would help establish this record.
+  </div>
+
+  <h3>Photo Documentation</h3>
+  <p class="text-muted">12 representative photos from 2021–2026 showing progression of delamination and filon cracking. Use arrows or dots to navigate.</p>
+
+  <div id="carousel" style="position:relative; max-width:780px; margin:24px auto; user-select:none;">
+    <!-- Track -->
+    <div id="car-track" style="overflow:hidden; border-radius:8px; background:#000; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center;">
+      <img id="car-img" src="" alt="" style="max-width:100%; max-height:100%; object-fit:contain; display:block; transition:opacity 0.25s ease;">
+    </div>
+
+    <!-- Caption -->
+    <div id="car-caption" style="text-align:center; padding:10px 48px; font-size:0.9rem; line-height:1.4; min-height:48px; color:#444;"></div>
+
+    <!-- Prev button -->
+    <button onclick="carMove(-1)" style="position:absolute; top:calc(50% - 28px); left:-20px; transform:translateY(-50%); width:40px; height:40px; border-radius:50%; border:none; background:rgba(0,0,0,0.55); color:#fff; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">&#8249;</button>
+
+    <!-- Next button -->
+    <button onclick="carMove(1)"  style="position:absolute; top:calc(50% - 28px); right:-20px; transform:translateY(-50%); width:40px; height:40px; border-radius:50%; border:none; background:rgba(0,0,0,0.55); color:#fff; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">&#8250;</button>
+
+    <!-- Dots -->
+    <div id="car-dots" style="display:flex; justify-content:center; gap:6px; padding:8px 0 4px;"></div>
+  </div>
+
+  <script>
+  (function(){
+    var slides = [
+      { src:"photos/2021-10_cracks-at-roof-corner-01.jpg",          cap:"Oct 2021 — Hairline cracks at roof corners. First documented evidence of surface stress." },
+      { src:"photos/2021-10_hairline-crack-surface-01.jpg",         cap:"Oct 2021 — Hairline cracks along filon surface. Reported to Winnebago; evaluation requested." },
+      { src:"photos/2022-01_delamination-bubble-close-up.jpg",      cap:"Jan 2022 — Delamination bubble forming. Filon skin visibly separating from luan plywood substrate." },
+      { src:"photos/2022-01_raised-ridge-across-roof-01.jpg",       cap:"Jan 2022 — Raised ridge running across roof width. Bond failure causing filon skin to lift." },
+      { src:"photos/2022-02_spirit-level-gap-at-ac-unit.jpg",       cap:"Feb 2022 — Spirit level shows gap at front AC unit. Filon surface deflecting under own weight." },
+      { src:"photos/2022-02_three-quarter-inch-gap-under-level.jpg", cap:"Feb 2022 — Spirit level reveals measurable unevenness. Roof no longer flat across its span." },
+      { src:"photos/2023-12_ridge-overview-spirit-level.jpg",       cap:"Dec 2023 — Spirit level across ridge showing continued delamination. Progressive over 2 years." },
+      { src:"photos/2023-12_spirit-level-gap-at-front-ac-side.jpg", cap:"Dec 2023 — Gap at front AC side confirmed again. Delamination has not self-corrected." },
+      { src:"photos/2026-03_severe-ridges-across-full-width.jpg",   cap:"Mar 2026 — Severe ridges spanning full roof width. Condition substantially worse than 2022." },
+      { src:"photos/2026-03_severe-ridge-close-up.jpg",             cap:"Mar 2026 — Close-up of severe ridge. Filon skin under significant stress at delamination boundary." },
+      { src:"photos/2026-06_filon-crack-pattern-along-ridge-wide.jpg", cap:"Jun 2026 — Stress fractures in filon skin along delaminated ridge. Photographed before any sealant applied." },
+      { src:"photos/2026-06_filon-fracture-at-delamination-ridge.jpg", cap:"Jun 2026 — Filon fracture at ridge boundary. These cracks are the apparent moisture pathway, not sealant failure." }
+    ];
+    var cur = 0;
+    var img = document.getElementById('car-img');
+    var cap = document.getElementById('car-caption');
+    var dotsEl = document.getElementById('car-dots');
+
+    // Build dots
+    slides.forEach(function(_, i){
+      var d = document.createElement('button');
+      d.style.cssText = 'width:10px;height:10px;border-radius:50%;border:none;padding:0;cursor:pointer;background:#ccc;transition:background 0.2s;';
+      d.onclick = function(){ goTo(i); };
+      dotsEl.appendChild(d);
+    });
+
+    function goTo(n){
+      img.style.opacity = '0';
+      setTimeout(function(){
+        cur = (n + slides.length) % slides.length;
+        img.src = slides[cur].src;
+        img.alt = slides[cur].cap;
+        img.style.opacity = '1';
+        cap.textContent = slides[cur].cap;
+        Array.from(dotsEl.children).forEach(function(d, i){
+          d.style.background = i === cur ? '#1a3a5c' : '#ccc';
+        });
+      }, 150);
+    }
+
+    window.carMove = function(dir){ goTo(cur + dir); };
+
+    // Keyboard nav
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowLeft')  goTo(cur - 1);
+      if(e.key === 'ArrowRight') goTo(cur + 1);
+    });
+
+    goTo(0);
+  })();
+  </script>
+</section>
+
+<!-- OPTION A -->
+<section id="option-a">
+  <div class="section-label">Section 3</div>
+  <h2>Option A — Winnebago Factory Service Center</h2>
+
+  <h3>Overview</h3>
+  <p>Winnebago's Factory Service Center is located in Forest City, Iowa — approximately 1,900 miles from Simi Valley, CA. Their goodwill offer covers parts in full and caps labor at 80 of the estimated 104 hours. I would be responsible for the remaining 80 hours of labor plus the cost of driving the coach to Iowa and back.</p>
+
+  <h3>Work Scope</h3>
+  <p>Winnebago has not provided a line-item scope of work. Based on their 104-hour estimate, the scope is assumed to be a full OEM fiberglass roof replacement including removal of the existing delaminated skin, replacement of the filon surface, and reinstallation of all roof-mounted accessories (AC units, vents, antenna, fans, skylight).</p>
+
+  <h3>Roof System: OEM Fiberglass / Filon</h3>
+  <div class="spec-block">
+    <h4>Material Characteristics</h4>
+    <div class="spec-row"><span class="spec-key">Material</span><span class="spec-val">Fiberglass-reinforced plastic (filon) panel, bonded to luan plywood substrate with contact adhesive</span></div>
+    <div class="spec-row"><span class="spec-key">Construction</span><span class="spec-val">Rigid laminated panel system — filon skin adhered to foam/plywood composite using contact cement</span></div>
+    <div class="spec-row"><span class="spec-key">Failure mode</span><span class="spec-val">Adhesive bond degrades over time under thermal cycling and UV exposure; skin separates from substrate (delamination). Seams and penetrations require periodic re-caulking.</span></div>
+    <div class="spec-row"><span class="spec-key">Maintenance</span><span class="spec-val">Annual inspection and re-caulking of seams, radius edges, and all penetration points required</span></div>
+    <div class="spec-row"><span class="spec-key">Industry notes</span><span class="spec-val">Accent RV notes this design "often fails due to perimeter separation, lack of mechanical fasteners at roof radius, fiberglass cracking caused by flexing and thermal expansion, and aging adhesives that lose bond strength." This is the same design that has been failing on this coach since 2021.</span></div>
+  </div>
+
+  <h3>Cost Breakdown</h3>
+  <table>
+    <tr><th>Item</th><th class="td-right">Cost</th></tr>
+    <tr><td>Parts (covered by Winnebago)</td><td class="td-right">$0</td></tr>
+    <tr><td>Labor — Winnebago's contribution (24 hrs × $209)</td><td class="td-right">$0 (covered)</td></tr>
+    <tr><td><strong>Labor — Bob's responsibility (80 hrs × $209/hr)</strong></td><td class="td-right"><strong>$16,720</strong></td></tr>
+    <tr><td>Fuel: ~3,800 miles round trip, diesel pusher (~7 mpg) at ~$4/gal</td><td class="td-right">~$2,170</td></tr>
+    <tr><td>Hotels: estimated 5 nights each way × $120</td><td class="td-right">~$1,200</td></tr>
+    <tr><td>Meals, incidentals</td><td class="td-right">~$400</td></tr>
+    <tr class="subtotal-row"><td>Travel subtotal</td><td class="td-right">~$3,770</td></tr>
+    <tr class="total-row"><td>Estimated Total</td><td class="td-right">~$20,490</td></tr>
+  </table>
+  <p class="text-muted">Note: Travel estimate is approximate. Actual cost depends on fuel prices, number of overnight stops, and whether the coach requires an extended stay in Iowa.</p>
+
+  <h3>Warranty</h3>
+  <p>No factory warranty applies. Winnebago confirmed this is a goodwill repair outside the terms of the limited warranty. It is unknown whether they would provide any warranty on the goodwill repair work itself — this has not been specified in any written communication. Assumption should be: no warranty unless explicitly confirmed in writing before work begins.</p>
+
+  <h3>Pros and Cons</h3>
+  <div class="pro-con">
+    <div class="pros">
+      <h4>Pros</h4>
+      <ul>
+        <li>Factory service — OEM work on an OEM vehicle</li>
+        <li>Winnebago has full knowledge of this specific case</li>
+        <li>Parts covered at no cost</li>
+        <li>Dispute with Winnebago resolved through their own process</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Cons</h4>
+      <ul>
+        <li>Bob pays $16,720 in labor — more than Accent RV's all-in price</li>
+        <li>~3,800 miles of driving round trip adds ~$3,700 in costs</li>
+        <li>Total exposure ~$20,000+ exceeds Bob's $10K threshold</li>
+        <li>Same roof design that failed — doesn't address root cause</li>
+        <li>No factory warranty; goodwill repair warranty (if any) unknown and unconfirmed</li>
+        <li>Requires significant time away from home</li>
+        <li>Offer walked back once already; terms less clear than March 18 letter</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- OPTION B -->
+<section id="option-b">
+  <div class="section-label">Section 4</div>
+  <h2>Option B — Accent RV Roofing Specialties (ARV RoofTech™)</h2>
+
+  <h3>About Accent RV</h3>
+  <p>Accent RV Roofing Specialties has been operating in Corona, CA since 1996 — nearly 30 years specializing exclusively in RV roofing. They have a <a href="https://www.rvroofoc.com/fiberglass-roof-replacement" target="_blank">dedicated service page for Winnebago fiberglass roof failures</a> and describe it as one of their most common repair categories. Rated 4.9 stars across 55 reviews on Birdeye. Service advisor on this estimate: Jeff Johnston.</p>
+
+  <h3>Roof System: <a href="https://www.rvroofoc.com/arv-roof-tech" target="_blank" style="color:#1c3a5e">ARV RoofTech™</a></h3>
+  <p>ARV RoofTech™ is Accent RV's proprietary multi-layer membrane roofing system. It is <strong>not</strong> an OEM fiberglass replacement — it replaces the filon panel technology entirely with a bonded elastomeric membrane system using the same material technology found in commercial flat roofing, bridge waterproofing, and industrial applications. Full technical details: <a href="https://www.rvroofoc.com/arv-roof-tech" target="_blank">rvroofoc.com/arv-roof-tech</a>.</p>
+
+  <div class="spec-block">
+    <h4>Layer 1: High-Bond Acrylic Base Membrane</h4>
+    <div class="spec-row"><span class="spec-key">Material class</span><span class="spec-val">Water-based elastomeric acrylic coating</span></div>
+    <div class="spec-row"><span class="spec-key">Function</span><span class="spec-val">Creates the adhesion foundation; bonds to the fresh luan plywood substrate; primes the surface for reinforcement fabric</span></div>
+    <div class="spec-row"><span class="spec-key">Other applications</span><span class="spec-val">Widely used on commercial flat roofs (warehouses, schools, hospitals), metal roofs, modified bitumen systems. Standard commercial roofing technology with decades of track record.</span></div>
+  </div>
+
+  <div class="spec-block">
+    <h4>Layer 2: Poly-Flex™ Reinforcement Fabric</h4>
+    <div class="spec-row"><span class="spec-key">Material class</span><span class="spec-val">Scrim-reinforced polyester fabric (proprietary blend — Accent RV's formulation)</span></div>
+    <div class="spec-row"><span class="spec-key">Function</span><span class="spec-val">Embedded into wet base layer; adds dimensional stability and tear resistance; bridges stress points and seams; prevents cracking at penetrations and perimeter edges</span></div>
+    <div class="spec-row"><span class="spec-key">Key benefit</span><span class="spec-val">Eliminates the need for caulking at seams — seams become part of the reinforced membrane, not a separate sealant bead that shrinks and cracks over time</span></div>
+    <div class="spec-row"><span class="spec-key">Other applications</span><span class="spec-val">Scrim-reinforced membranes are used in bridge deck waterproofing, tunnel liners, foundation waterproofing, geomembranes (pond and landfill liners), and industrial flooring</span></div>
+  </div>
+
+  <div class="spec-block">
+    <h4>Layer 3: Polyurethane-Modified Elastomeric Topcoat</h4>
+    <div class="spec-row"><span class="spec-key">Material class</span><span class="spec-val">Polyurethane-modified elastomeric coating (two full spray coats + final topcoat)</span></div>
+    <div class="spec-row"><span class="spec-key">Function</span><span class="spec-val">Final weatherproof shell; handles UV, heat, vibration, ponding water, and foot traffic</span></div>
+    <div class="spec-row"><span class="spec-key">UV performance</span><span class="spec-val">Formulated for high solar reflectivity and long-term UV stability. Bright white reflective finish reduces interior temperatures. Accent RV's shop is in the Inland Empire — UV and desert heat performance is tested locally.</span></div>
+    <div class="spec-row"><span class="spec-key">Flexibility</span><span class="spec-val">High elongation — flexes with road vibration and thermal expansion rather than cracking. This is the inverse of why filon fails: filon is rigid, this is flexible.</span></div>
+    <div class="spec-row"><span class="spec-key">Other applications</span><span class="spec-val">Commercial flat roofing, spray foam roof systems, marine deck coatings, truck bed liners (Rhino Liner / Line-X chemistry), parking garage waterproofing, bridge deck protection, stadium surfaces</span></div>
+  </div>
+
+  <div class="spec-block">
+    <h4>Adhesive: Stabond Commercial Contact Adhesive</h4>
+    <div class="spec-row"><span class="spec-key">Manufacturer</span><span class="spec-val">Stabond Corporation — commercial adhesives manufacturer</span></div>
+    <div class="spec-row"><span class="spec-key">Other applications</span><span class="spec-val">RV and composite vehicle manufacturing; aerospace and defense (fiberglass composites, aluminum bonding); synthetic turf installation. High-temperature resistance formulations.</span></div>
+  </div>
+
+  <h3>Installation Process</h3>
+  <p>All ARV RoofTech™ installations are performed indoors in a climate-controlled environment to eliminate moisture contamination, dew, and temperature inconsistency during curing — ensuring maximum adhesion and membrane integrity.</p>
+  <ol style="padding-left:20px; font-size:14px; color:#333; margin:12px 0;">
+    <li style="margin-bottom:8px"><strong>Tear-off and inspection:</strong> Remove all roof parts, existing membrane, sealants, and adhesive. Inspect plywood substrate for water damage or rot. Repair any structural issues found.</li>
+    <li style="margin-bottom:8px"><strong>New substrate:</strong> Install fresh luan plywood (9 sheets, 4'×8'×¼") over the full roof for a clean bonding surface.</li>
+    <li style="margin-bottom:8px"><strong>Base membrane + fabric:</strong> Apply acrylic base while wet; embed Poly-Flex™ fabric; apply second membrane coat over fabric to fully encapsulate and bond the reinforcement layer.</li>
+    <li style="margin-bottom:8px"><strong>Seam and penetration reinforcement:</strong> Using same base + fabric, seal all perimeter edges, both side rails, front and rear cap transitions, and every roof penetration (AC units, vents, antennas, skylight). These areas become part of the unified membrane — no caulk beads.</li>
+    <li style="margin-bottom:8px"><strong>Topcoat:</strong> Two spray coats of elastomeric base followed by polyurethane-modified topcoat across entire roof surface.</li>
+    <li style="margin-bottom:8px"><strong>Aluminum radius and trim:</strong> Install aluminum radius moldings on both sides; install flat trim moldings. Color-tinted to blend with RV exterior.</li>
+  </ol>
+
+  <h3>Detailed Cost Breakdown (from Estimate)</h3>
+  <table>
+    <tr><th colspan="2">Labor — $7,030.00</th></tr>
+    <tr><td>Remove and Install AC units (2) — includes new AC gaskets</td><td class="td-right">included</td></tr>
+    <tr><td>Remove and Install TV antenna, radio antennas (2)</td><td class="td-right">included</td></tr>
+    <tr><td>Remove and Install 12v fans (2)</td><td class="td-right">included</td></tr>
+    <tr><td>Remove and <strong>Replace</strong> plumbing vents (2) — new units</td><td class="td-right">included</td></tr>
+    <tr><td>Remove and <strong>Replace</strong> skylight — new unit</td><td class="td-right">included</td></tr>
+    <tr><td>Remove existing roof membrane, sealants, adhesive</td><td class="td-right">included</td></tr>
+    <tr><td>Install luan plywood substrate</td><td class="td-right">included</td></tr>
+    <tr><td>Install aluminum radius moldings (both sides) and flat trim moldings</td><td class="td-right">included</td></tr>
+    <tr><td>Install ARV RoofTech 18-year no-leak system (full application)</td><td class="td-right">included</td></tr>
+    <tr><td>Tint side radius to blend with overall RV color</td><td class="td-right">included</td></tr>
+    <tr class="subtotal-row"><td>Labor subtotal</td><td class="td-right">$7,030.00</td></tr>
+
+    <tr><th colspan="2" style="padding-top:16px">Parts — $5,359.43</th></tr>
+    <tr><td>ARV RoofTech 18 kit (36 units × $90.50)</td><td class="td-right">$3,258.00</td></tr>
+    <tr><td>Generic aluminum roof radius (72 units × $9.85)</td><td class="td-right">$709.20</td></tr>
+    <tr><td>AP Products flat trim molding (5 × $54.90)</td><td class="td-right">$274.50</td></tr>
+    <tr><td>Stabond commercial contact adhesive (2.5 gal × $145.07)</td><td class="td-right">$362.68</td></tr>
+    <tr><td>Specialty Recreation skylight, 18"×30", smoke (1 × $217.44)</td><td class="td-right">$217.44</td></tr>
+    <tr><td>Dometic AC roof gasket — black (2 × $64.55)</td><td class="td-right">$129.10</td></tr>
+    <tr><td>Generic luan plywood 4'×8'×¼" (9 × $38.34)</td><td class="td-right">$345.06</td></tr>
+    <tr><td>Hengs putty tape (3.5 × $9.50)</td><td class="td-right">$33.25</td></tr>
+    <tr><td>Custom Plastics 2-piece RV plumbing vent (2 × $5.10)</td><td class="td-right">$10.20</td></tr>
+    <tr><td>Generic fasteners (200 × $0.10)</td><td class="td-right">$20.00</td></tr>
+    <tr class="subtotal-row"><td>Parts subtotal</td><td class="td-right">$5,359.43</td></tr>
+
+    <tr><th colspan="2" style="padding-top:16px">Summary</th></tr>
+    <tr><td>Vehicle check-in &amp; protection kit</td><td class="td-right">$40.00</td></tr>
+    <tr><td>Roof replacement (labor + parts)</td><td class="td-right">$12,389.43</td></tr>
+    <tr><td>Shop supplies</td><td class="td-right">$0.00</td></tr>
+    <tr><td>Sales tax</td><td class="td-right">$472.45</td></tr>
+    <tr class="total-row"><td>TOTAL</td><td class="td-right">$12,901.88</td></tr>
+  </table>
+
+  <h3>Pre-Work Inspections Included</h3>
+  <p class="text-muted">Test AC units prior to tear-off · Test interior lights · Test interior fan assemblies · Inspect plywood upon membrane removal · Test TV antenna and inspect coaxial cable</p>
+
+  <h3>Warranty</h3>
+  <p>18-year no-leak warranty, fully transferable to subsequent owners at time of sale. If the roof leaks or fails at any point during the warranty period, Accent RV repairs it at no cost. Labor and materials both covered.</p>
+
+  <div class="alert">
+    <strong>Note on warranty service location:</strong> ARV RoofTech is proprietary to Accent RV. All warranty service would need to return to their Corona, CA facility. If you travel extensively or relocate, this is worth factoring in.
+  </div>
+
+  <h3>Pros and Cons</h3>
+  <div class="pro-con">
+    <div class="pros">
+      <h4>Pros</h4>
+      <ul>
+        <li>$12,901 all-in — $3,800 less than Winnebago labor alone</li>
+        <li>Local — ~50 miles / 2–3 hour drive from home vs. 1,900 miles to Iowa</li>
+        <li>Different technology — addresses root cause of filon failure</li>
+        <li>18-year fully transferable warranty (labor + materials)</li>
+        <li>Maintenance-free: no caulking or resealing required</li>
+        <li>Plumbing vents and skylight replaced (not just reinstalled)</li>
+        <li>28+ years of experience; Winnebago fiberglass is their specialty</li>
+        <li>Pre-work inspections of all systems included</li>
+        <li>Well within Bob's $10K threshold (just under $13K, no travel)</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>Cons</h4>
+      <ul>
+        <li>Non-OEM system — changes roof material from original fiberglass</li>
+        <li>Warranty service tied to one location (Corona, CA)</li>
+        <li>Proprietary product — no independent third-party track record data available</li>
+        <li>Gives up Winnebago dispute (closes that path)</li>
+        <li>Unknown impact on resale value vs. OEM replacement</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section id="comparison">
+  <div class="section-label">Section 5</div>
+  <h2>Side-by-Side Comparison</h2>
+
+  <table class="compare-table">
+    <tr>
+      <th>Factor</th>
+      <th class="opt-a">Option A: Winnebago Iowa</th>
+      <th class="opt-b">Option B: Accent RV</th>
+    </tr>
+    <tr>
+      <td><strong>Total cost</strong></td>
+      <td>~$20,490 (labor $16,720 + travel ~$3,770)</td>
+      <td class="win">$12,901.88 all-in</td>
+    </tr>
+    <tr>
+      <td><strong>Savings vs. other option</strong></td>
+      <td>—</td>
+      <td class="win">~$7,600 less</td>
+    </tr>
+    <tr>
+      <td><strong>Travel required</strong></td>
+      <td>~3,800 miles round trip, ~10 days</td>
+      <td class="win">~50 miles / 2–3 hour drive (vs. 1,900 miles to Iowa)</td>
+    </tr>
+    <tr>
+      <td><strong>Roof technology</strong></td>
+      <td>OEM fiberglass/filon — same design that failed</td>
+      <td class="win">Multi-layer elastomeric membrane — different technology, addresses root cause</td>
+    </tr>
+    <tr>
+      <td><strong>Maintenance after install</strong></td>
+      <td>Annual caulking/resealing of seams and penetrations</td>
+      <td class="win">None required (no caulk beads, sealed membrane)</td>
+    </tr>
+    <tr>
+      <td><strong>Warranty duration</strong></td>
+      <td>None (goodwill repair; no factory warranty)</td>
+      <td class="win">18 years</td>
+    </tr>
+    <tr>
+      <td><strong>Warranty type</strong></td>
+      <td>Possibly none — unspecified and unconfirmed</td>
+      <td class="win">Labor + materials, fully transferable</td>
+    </tr>
+    <tr>
+      <td><strong>UV/SoCal durability</strong></td>
+      <td>Filon is susceptible to UV-induced brittleness (documented)</td>
+      <td class="win">Polyurethane topcoat formulated for high UV stability; reflective white finish</td>
+    </tr>
+    <tr>
+      <td><strong>Road vibration resistance</strong></td>
+      <td>Rigid panel — prone to cracking at stress points</td>
+      <td class="win">Flexible elastomeric membrane — designed to flex with road movement</td>
+    </tr>
+    <tr>
+      <td><strong>Skylight replaced?</strong></td>
+      <td>Unknown (not specified)</td>
+      <td class="win">Yes — new Specialty Recreation unit included</td>
+    </tr>
+    <tr>
+      <td><strong>Plumbing vents replaced?</strong></td>
+      <td>Unknown (likely reuse existing)</td>
+      <td class="win">Yes — new units included</td>
+    </tr>
+    <tr>
+      <td><strong>Substrate inspection</strong></td>
+      <td>Expected (factory teardown)</td>
+      <td class="win">Confirmed — plywood inspected upon membrane removal</td>
+    </tr>
+    <tr>
+      <td><strong>Installer experience</strong></td>
+      <td>Winnebago factory — OEM familiarity</td>
+      <td>28 years, Winnebago fiberglass specialist</td>
+    </tr>
+    <tr>
+      <td><strong>Warranty service location</strong></td>
+      <td class="win">Any Winnebago dealer (multiple locations)</td>
+      <td>Accent RV, Corona CA only</td>
+    </tr>
+    <tr>
+      <td><strong>OEM / resale optics</strong></td>
+      <td class="win">OEM — original material type preserved</td>
+      <td>Non-OEM — different roof system on record</td>
+    </tr>
+  </table>
+</section>
+
+<!-- QUESTIONS -->
+<section id="questions" class="questions">
+  <div class="section-label">Section 6</div>
+  <h2>Questions for the Community</h2>
+  <p>I'm sharing this with experienced RV owners, technicians, and enthusiasts to get a second opinion before making a decision. Here are the specific questions I'd love input on:</p>
+
+  <ol>
+    <li><strong>ARV RoofTech or similar membrane systems:</strong> Have you had personal experience with an elastomeric membrane system replacing a fiberglass/filon roof? How has it held up long-term? Any issues with adhesion, cracking, or appearance over time?</li>
+    <li><strong>OEM vs. membrane — does it matter?</strong> For a 2017 coach that will likely be kept another 10+ years, is there a meaningful reason to keep the OEM fiberglass roof over switching to a membrane system? Does the material change affect resale value in your experience?</li>
+    <li><strong>The Winnebago offer:</strong> Is the Winnebago labor cap offer typical for goodwill repairs? Would you pursue it further, or is the pricing gap too large to bother?</li>
+    <li><strong>SoCal sun exposure:</strong> For coaches stored and used year-round in Southern California without cover, does a reflective elastomeric membrane outperform filon long-term? Any known failure modes under intense UV?</li>
+    <li><strong>Anything in the Accent RV
