@@ -279,6 +279,52 @@
   .badge-blue { background: #dceeff; color: #1c5a8a; }
   .badge-green { background: #d4f0e0; color: #1a6b3c; }
   .badge-yellow { background: #fff3cc; color: #8a6000; }
+
+  /* ── Mobile overrides ── */
+  @media (max-width: 700px) {
+    /* prevent horizontal overflow */
+    html, body { overflow-x: hidden; }
+    .page { overflow-x: hidden; }
+
+    /* tighten hero */
+    .hero { padding: 28px 20px 24px; }
+    .hero h1 { font-size: 22px; }
+
+    /* nav: smaller padding, let pills wrap */
+    .nav { padding: 10px 16px; gap: 6px; }
+    .nav a { font-size: 12px; padding: 4px 10px; }
+
+    /* content padding */
+    .content { padding: 0 16px 48px; }
+    section { padding-top: 32px; }
+
+    /* make all tables horizontally scrollable */
+    table {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
+
+    /* spec rows: stack key/value */
+    .spec-row { flex-wrap: wrap; }
+    .spec-key { min-width: unset; width: 100%; margin-bottom: 2px; }
+
+    /* carousel arrows: bring inside on narrow screens */
+    #carousel button[onclick] {
+      left: 4px !important;
+    }
+    #carousel button[onclick]:last-of-type {
+      right: 4px !important;
+      left: auto !important;
+    }
+
+    /* hero meta: stack */
+    .hero-meta { gap: 12px; font-size: 13px; }
+
+    /* cost table cells: smaller font */
+    td, th { font-size: 13px; padding: 8px 10px; }
+  }
 </style>
 </head>
 <body>
